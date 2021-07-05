@@ -1,5 +1,27 @@
 {
     "devDependencies": {
-        "cypress": "^7.6.0"
+        "@percy/cypress": "1.0.4",
+        "cypress": "^7.6.0",
+        "cypress-cucumber-preprocessor": "1.10.0",
+        "cypress-dark": "1.7.10",
+        "cypress-file-upload": "2.0.0",
+        "cypress-multi-reporters": "^1.1.22",
+        "cypress-xpath": "1.3.0",
+        "mocha": "^6.2.3",
+        "mocha-junit-reporters": "^1.23.6",
+        "mochawesome": "^3.1.2",
+        "mochawesome-merge": "^2.1.0",
+        "mochawesome-report-generator": "^4.1.0"
+    },
+    "scripts": {
+        "cypress:open": "cypress open",
+        "cypress:run": "cypress run",
+        "test:chrome": "cypress run --browser chrome",
+        "cy:run:firefox": "cypress run --browser firefox",
+        "cy:run:edge": "cypress run --browser edge",
+        "combine-reports": "mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json",
+        "generate-report": "merge mochareports/*.json -f report -o mochareports",
+        "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
+        "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
     }
 }
