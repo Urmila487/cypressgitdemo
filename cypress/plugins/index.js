@@ -20,3 +20,22 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 }
+
+const cucumber = require('cypress-cucumber-preprocessor').default
+module.exports = (on,config) => {
+
+//cucumber
+on('file:preprocessor',cucumber())
+
+//Browser Launch
+on('before:browser:launch',(browser = {},args) => {
+  if( browser.name === 'chrome') {
+    return args
+  }
+  if( browser.name === 'electron') {
+    args['Fullscreen'] = false
+    return args
+  }
+})
+
+}
