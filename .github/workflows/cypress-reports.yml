@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actionss
+# For more and more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actionss
 
 name: Generate Cypress Report
 
 on:
   push:
     branches:
-     -'master'
+      - 'master'
 
 jobs:
   cypress-test:
-    name: Run on Chrme 91
+    name: Run on Chrome 90
     runs-on: ubuntu-18.04
     container: cypress/browsers:node14.16.0-chrome90-ff88
     steps:
@@ -19,6 +19,8 @@ jobs:
         - name: Install cypress and verify
           run :
             npm ci
+            $(npm bin)/cypress cache path
+            $(npm bin)/cypress cache list
             $(npm bin)/cypress verify
 
         - name: Run Cypress tests
@@ -26,10 +28,9 @@ jobs:
           continue-on-error : true
 
         - name : copy test execution videos and screenshots
-          run :
+          run: |
             mkdir public
             cp -r cypress/videos public/videos
-            cp -r cypress/screenshots public/screenshots
 
 
         - name : merge test reports
@@ -43,3 +44,5 @@ jobs:
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             publish_dir: ./public
+            user_name: 'github-actions[bot]'
+            user_email: 'github-actions[bot]@users.noreply.github.com'
